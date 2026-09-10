@@ -1,6 +1,18 @@
 import streamlit as st
 import os
+import os
 
+st.sidebar.markdown("---")
+
+if st.sidebar.checkbox("Debug Files"):
+    st.write("Current directory:")
+    st.write(os.getcwd())
+
+    st.write("Repository files:")
+    for root, dirs, files in os.walk("."):
+        st.write(root)
+        for f in files:
+            st.write("   ", f)
 # --------------------------------------------------
 # PAGE CONFIG
 # --------------------------------------------------
