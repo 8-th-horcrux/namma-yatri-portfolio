@@ -1,21 +1,10 @@
 import streamlit as st
 import os
-import os
+from pathlib import Path
 
-st.sidebar.markdown("---")
-
-if st.sidebar.checkbox("Debug Files"):
-    st.write("Current directory:")
-    st.write(os.getcwd())
-
-    st.write("Repository files:")
-    for root, dirs, files in os.walk("."):
-        st.write(root)
-        for f in files:
-            st.write("   ", f)
-# --------------------------------------------------
+# ==================================================
 # PAGE CONFIG
-# --------------------------------------------------
+# ==================================================
 
 st.set_page_config(
     page_title="Namma Yatri Operations Analytics",
@@ -23,19 +12,46 @@ st.set_page_config(
     layout="wide"
 )
 
-# --------------------------------------------------
-# HELPER FUNCTION
-# --------------------------------------------------
+# ==================================================
+# CUSTOM CSS
+# ==================================================
+
+st.markdown("""
+<style>
+
+.main {
+    padding-top: 1rem;
+}
+
+.metric-card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 5px solid #1f77b4;
+}
+
+.section-header {
+    color: #1f77b4;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# ==================================================
+# IMAGE FUNCTION
+# ==================================================
 
 def show_image(path):
-    if os.path.exists(path):
+    if Path(path).exists():
         st.image(path, use_container_width=True)
     else:
-        st.warning(f"Image not found: {path}")
+        st.error(f"Image not found: {path}")
 
-# --------------------------------------------------
+# ==================================================
 # SIDEBAR
-# --------------------------------------------------
+# ==================================================
 
 st.sidebar.title("🚖 Namma Yatri Analytics")
 
@@ -53,45 +69,49 @@ page = st.sidebar.radio(
     ]
 )
 
-# --------------------------------------------------
+# ==================================================
 # HEADER
-# --------------------------------------------------
+# ==================================================
 
 st.title("🚖 Namma Yatri Operations Analytics Portfolio")
 
 st.markdown("""
 ### Power BI | DAX | Business Analytics | Operations Analytics
 
-A business intelligence project focused on ride conversion,
-revenue generation, cancellations, and operational performance.
+A business intelligence project focused on:
+
+- Ride Conversion
+- Revenue Generation
+- Driver & Customer Cancellations
+- Operational Performance
+- Demand Analysis
+- Zone Performance Optimization
 """)
 
 github_url = "https://github.com/8-th-horcrux/namma-yatri-operations-analytics"
 
-# --------------------------------------------------
+# ==================================================
 # PROJECT OVERVIEW
-# --------------------------------------------------
+# ==================================================
 
 if page == "Project Overview":
 
-    st.header("Project Overview")
+    st.header("Business Problem")
 
     st.markdown("""
-### Business Problem
-
 Namma Yatri wanted to understand:
 
 - Ride demand patterns
-- Revenue generation
-- Ride conversion funnel
-- Customer cancellations
-- Driver cancellations
-- Zone-wise performance
+- Revenue generation opportunities
+- Ride booking conversion rates
+- Driver cancellation behavior
+- Customer cancellation behavior
+- Zone-level performance
 
-### Objective
+### Project Goal
 
-Analyze operational performance and identify opportunities
-to improve ride completion rates and revenue generation.
+Analyze ride booking data and provide actionable business insights
+to improve operational efficiency and increase ride completion rates.
 """)
 
     st.link_button(
@@ -99,9 +119,31 @@ to improve ride completion rates and revenue generation.
         github_url
     )
 
-# --------------------------------------------------
+    st.divider()
+
+    st.subheader("Project Skills Demonstrated")
+
+    st.markdown("""
+✅ Power BI
+
+✅ DAX
+
+✅ Data Modelling
+
+✅ KPI Development
+
+✅ Revenue Analytics
+
+✅ Funnel Analytics
+
+✅ Business Intelligence
+
+✅ Data Storytelling
+""")
+
+# ==================================================
 # EXECUTIVE DASHBOARD
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Executive Dashboard":
 
@@ -110,123 +152,89 @@ elif page == "Executive Dashboard":
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.metric(
-            "Total Revenue",
-            "₹7,51,343"
-        )
+        st.metric("Total Revenue", "₹7,51,343")
 
     with col2:
-        st.metric(
-            "Ride Success Rate",
-            "76.98%"
-        )
+        st.metric("Ride Success Rate", "76.98%")
 
     with col3:
-        st.metric(
-            "Driver Cancellation",
-            "10.7%"
-        )
+        st.metric("Driver Cancellation", "10.7%")
 
     with col4:
-        st.metric(
-            "Customer Cancellation",
-            "1.6%"
-        )
+        st.metric("Customer Cancellation", "1.6%")
 
     show_image("assets/executive_dashboard.png")
 
     st.markdown("""
-### Executive Insights
+### Executive Summary
 
-- Successful Ride Rate = 76.98%
-- Driver Cancellation Rate = 10.7%
-- Customer Cancellation Rate = 1.6%
-- Total Revenue = ₹7.5 Lakhs
+The platform generated over ₹7.5 Lakhs in revenue while maintaining a ride success rate of nearly 77%.
 
-The platform demonstrates strong ride completion
-performance but still has room for operational
-optimization through cancellation reduction.
+Driver cancellations remain the primary operational challenge compared to customer cancellations.
 """)
 
-# --------------------------------------------------
+# ==================================================
 # REVENUE ANALYSIS
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Revenue Analysis":
 
-    st.header("Revenue Analysis")
+    st.header("Time-Based Revenue Contribution Analysis")
 
-    show_image("assets/revenue_analysis_time.png")
+    show_image("assets/revenue_analysis_Time_Period.png")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric(
-            "Total Revenue",
-            "₹7,51,343"
-        )
+        st.metric("Total Revenue", "₹7,51,343")
 
     with col2:
-        st.metric(
-            "Revenue Gap",
-            "₹52,591"
-        )
+        st.metric("Revenue Gap", "₹52,591")
 
     with col3:
-        st.metric(
-            "Top Revenue Period",
-            "Evening"
-        )
+        st.metric("Top Revenue Period", "Evening")
 
     st.markdown("""
 ### Key Findings
 
-- Afternoon generated the highest revenue contribution.
-- Evening remained a strong revenue period.
-- Late Night generated the lowest revenue.
-- Revenue contribution remains relatively balanced.
+- Afternoon generated one of the strongest revenue contributions.
+- Evening remained a high-performing time period.
+- Late Night contributed the lowest revenue.
+- Revenue contribution is distributed relatively evenly.
 
 ### Business Impact
 
-Understanding time-based demand helps optimize:
+This information can help optimize:
 
-- Driver deployment
+- Driver allocation
 - Dynamic pricing
-- Incentive planning
+- Incentive structures
+- Demand forecasting
 """)
 
-# --------------------------------------------------
+# ==================================================
 # ZONE ANALYSIS
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Zone Analysis":
 
     st.header("Pickup Zone Performance Analysis")
 
-    show_image("assets/zone_analysis.png")
+    show_image("assets/revenue_analysis_zone.png")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric(
-            "Top Pickup Zone",
-            "Ramanagaram"
-        )
+        st.metric("Top Pickup Zone", "Ramanagaram")
 
     with col2:
-        st.metric(
-            "Top Revenue Zone",
-            "Bangalore South"
-        )
+        st.metric("Top Revenue Zone", "Bangalore South")
 
     with col3:
-        st.metric(
-            "Top Zone Revenue",
-            "₹30,295"
-        )
+        st.metric("Top Zone Revenue", "₹30,295")
 
     st.markdown("""
-### Key Insights
+### Insights
 
 #### Ramanagaram
 
@@ -238,73 +246,54 @@ Highest revenue generation.
 
 ### Recommendation
 
-Allocate additional drivers to:
-
-- Ramanagaram
-- Bangalore South
-
-to maximize ride completion and revenue.
+Prioritize driver allocation and operational support
+for high-demand zones to maximize revenue and ride completion.
 """)
 
-# --------------------------------------------------
+# ==================================================
 # RIDE FUNNEL
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Ride Funnel":
 
     st.header("Ride Booking Conversion Funnel")
 
-    show_image("assets/funnel_analysis.png")
+    show_image("assets/ride_funnel.png")
 
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.metric(
-            "Ride Completion",
-            "76.98%"
-        )
+        st.metric("Ride Completion", "76.98%")
 
     with col2:
-        st.metric(
-            "Quote Searches",
-            "1277"
-        )
+        st.metric("Quote Searches", "1277")
 
     with col3:
-        st.metric(
-            "Completed Trips",
-            "983"
-        )
+        st.metric("Completed Trips", "983")
 
     with col4:
-        st.metric(
-            "Opportunity Loss",
-            "23.02%"
-        )
+        st.metric("Opportunity Loss", "23.02%")
 
     st.markdown("""
 ### Funnel Interpretation
 
 Searches
-⬇
+↓
 Quotes
-⬇
+↓
 Driver Acceptance
-⬇
+↓
 Completed Trips
 
-### Business Insight
+### Business Opportunity
 
-A significant opportunity exists between
-quote generation and ride completion.
-
-Reducing drop-offs can substantially
-increase revenue.
+Reducing drop-offs between quote generation and ride completion
+can significantly improve revenue.
 """)
 
-# --------------------------------------------------
+# ==================================================
 # CANCELLATION ANALYSIS
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Cancellation Analysis":
 
@@ -315,63 +304,58 @@ elif page == "Cancellation Analysis":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric(
-            "Driver Cancellation",
-            "10.7%"
-        )
+        st.metric("Driver Cancellation", "10.7%")
 
     with col2:
-        st.metric(
-            "Customer Cancellation",
-            "1.6%"
-        )
+        st.metric("Customer Cancellation", "1.6%")
 
     st.markdown("""
 ### Key Findings
 
-Driver cancellations are significantly higher
-than customer cancellations.
+Driver cancellations are significantly higher than customer cancellations.
 
 ### Possible Causes
 
-- Driver availability issues
+- Driver availability
 - Route mismatch
-- Incentive misalignment
+- Incentive issues
 
-### Suggested Actions
+### Recommended Actions
 
-- Driver incentives
 - Better route matching
-- Demand forecasting
+- Driver incentives
+- Demand prediction improvements
 """)
 
-# --------------------------------------------------
-# RECOMMENDATIONS
-# --------------------------------------------------
+# ==================================================
+# BUSINESS RECOMMENDATIONS
+# ==================================================
 
 elif page == "Business Recommendations":
 
     st.header("Business Recommendations")
 
+    show_image("assets/CARD VISUAL.png")
+
     st.success("""
 1. Increase driver availability during peak periods.
 
-2. Reduce driver cancellation rates through incentives.
+2. Reduce driver cancellation rates through incentive programs.
 
 3. Improve quote-to-trip conversion rates.
 
-4. Focus driver allocation on high-demand zones.
+4. Prioritize driver deployment in high-demand zones.
 
-5. Use demand forecasting to improve operational planning.
+5. Improve demand forecasting.
 
-6. Increase driver engagement during evening and afternoon periods.
+6. Improve ride completion rates through operational optimization.
 
-7. Reduce ride drop-offs through targeted operational interventions.
+7. Continuously monitor funnel performance and cancellations.
 """)
 
-# --------------------------------------------------
+# ==================================================
 # TECHNICAL ARCHITECTURE
-# --------------------------------------------------
+# ==================================================
 
 elif page == "Technical Architecture":
 
@@ -395,31 +379,56 @@ Business Insights
 Business Recommendations
 """)
 
-    st.markdown("""
-### Tools Used
+    st.subheader("Tools Used")
 
+    st.markdown("""
 - Power BI
 - DAX
 - Data Modelling
 - Power Query
 - Business Analytics
-
-### Skills Demonstrated
-
-- KPI Analysis
-- Funnel Analysis
-- Revenue Analytics
-- Operational Analytics
-- Data Storytelling
-- Dashboard Development
+- KPI Development
 """)
 
-# --------------------------------------------------
+    st.subheader("Skills Demonstrated")
+
+    st.markdown("""
+✅ Revenue Analytics
+
+✅ Operational Analytics
+
+✅ Funnel Analytics
+
+✅ Data Storytelling
+
+✅ Dashboard Development
+
+✅ Business Intelligence
+
+✅ KPI Reporting
+""")
+
+# ==================================================
 # FOOTER
-# --------------------------------------------------
+# ==================================================
 
 st.divider()
 
+col1, col2 = st.columns(2)
+
+with col1:
+    st.link_button(
+        "🔗 GitHub Repository",
+        github_url
+    )
+
+with col2:
+    st.link_button(
+        "📄 Project Report",
+        github_url
+    )
+
 st.markdown(
-    "Built by **Saqueib Imam** | Data Analytics Portfolio"
+    "<center><b>Built by Saqueib Imam | Data Analytics Portfolio</b></center>",
+    unsafe_allow_html=True
 )
